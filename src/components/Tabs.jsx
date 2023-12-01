@@ -5,8 +5,6 @@ const Tabs = () => {
   const [inputProduct, setInputProduct] = useState('');
   const [inputGarden, setInputGarden] = useState('');
   const [cards, setCards] = useState([]);
-
-  const [selectedItem, setSelectedItem] = useState('');
   const [products, setProducts] = useState([]);
   const [gardens, setGardens] = useState([]);
 
@@ -106,23 +104,20 @@ const Tabs = () => {
 
             {tabs[activeTab].label === 'Data' && (
                 <div>
-                <select
-                    value={selectedItem}
-                    onChange={(e) => setSelectedItem(e.target.value)}
-                    >
-                    <option value=''>Select Item</option>
-                    {products.map((product, index) => (
-                    <option key={index} value={product}>
-                        Product: {product}
-                        </option>
+                    <div className='list-container'>
+                        <div className='list'>
+                            <h3>Product List</h3>
+                            {products.map((product, index) => (
+                                <p key={index}>{product}</p>
+                            ))}
+                        </div>
+                        <div className='list'>
+                            <h3>Garden List</h3>
+                            {gardens.map((garden, index) => (
+                                <p key={index}>{garden}</p>
                         ))}
-                        {gardens.map((garden, index) => (
-                        <option key={index} value={garden}>
-                            Garden: {garden}
-                        </option>
-                        ))}
-                    </select>
-                    <br />
+                    </div>
+                </div>
                     <input
                         type='text'
                         placeholder='Add Product'
