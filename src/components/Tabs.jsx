@@ -1,12 +1,12 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [inputProduct, setInputProduct] = useState('');
   const [inputGarden, setInputGarden] = useState('');
   const [cards, setCards] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [gardens, setGardens] = useState([]);
+  const [products, setProducts] = useState(['Domates', 'Biber', 'Patlıcan']);
+  const [gardens, setGardens] = useState(['Tarla', 'Bahçe', 'Sera']);
 
   useEffect(() => {
     setInputProduct('');
@@ -24,8 +24,9 @@ const Tabs = () => {
   const handleInputChangeGarden = (e) => {
     setInputGarden(e.target.value);
   };
+
   const handleAddCard = () => {
-    // Yeni bir kart ekleyerek, input değerlerini kartın içine yazma işlemi
+    // Seçilen ürün ve bahçe isimlerini kartlara ekleme
     const newCard = {
       inputProduct: inputProduct,
       inputGarden: inputGarden,
@@ -36,106 +37,87 @@ const Tabs = () => {
     // inputları sıfırladık
     setInputProduct('');
     setInputGarden('');
-    };
-
-    const handleProductSelect = () => {
-        if (inputProduct) {
-          setProducts([...products, inputProduct]);
-          setInputProduct('');
-        }
-      };
-    
-      const handleGardenSelect = () => {
-        if (inputGarden) {
-          setGardens([...gardens, inputGarden]);
-          setInputGarden('');
-        }
-      };
-  
+  };
 
   const tabs = [
     { label: 'Home'},
     { label: 'Data'},
   ];
 
+  const handleProductSelect = () => {
+    if (inputProduct) {
+      setProducts([...products, inputProduct]);
+      setInputProduct('');
+    }
+  };
+  
+  const handleGardenSelect = () => {
+    if (inputGarden) {
+      setGardens([...gardens, inputGarden]);
+      setInputGarden('');
+    }
+  };
+
   return (
-        <div className="tabs-container">
-        <div className="tabs">
-            {tabs.map((tab, index) => (
-            <button
-                key={index}
-                onClick={() => handleTabChange(index)}
-                className={activeTab === index ? 'active' : ''}
-            >
-                {tab.label}
-            </button>
-            ))}
-        </div>
-        <div className="tab-content">
-            <h2>{tabs[activeTab].label}</h2>
-            {tabs[activeTab].label === 'Home' && (
-                <div>
-                    <input className='place-holder'
-                        type='text'
-                        placeholder='Product Type'
-                        value={inputProduct}
-                        onChange={handleInputChangeProduct}
-                    />
-                    <input className='place-holder'
-                        type='text'
-                        placeholder='Garden Type'
-                        value={inputGarden}
-                        onChange={handleInputChangeGarden}
-                    />
-                    <button onClick={handleAddCard} className='card-button'>Add Card</button>
-
-                    {/* Eklenen Kartları Listeleme İşlemi*/}
-                    <div>
-                        {cards.map((card, index)=>(
-                            <div key={index} className='card'>
-                                <p className='card-title'>Garden : {card.inputGarden}</p>
-                                <p className='card-content'>Product : {card.inputProduct}</p>
-                                
-                            </div>
-                        ))}
-                    </div>
+    <div className="tabs-container">
+      <div className="tabs">
+        {tabs.map((tab, index) => (
+          <button
+            key={index}
+            onClick={() => handleTabChange(index)}
+            className={activeTab === index ? 'active' : ''}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+      <div className="tab-content">
+        <h2>{tabs[activeTab].label}</h2>
+        {tabs[activeTab].label === 'Home' && (
+          <div>  
+            <div>
+              {cards.map((card, index) => (
+                <div key={index} className='card'>
+                  <p className='card-title'>Garden : {card.inputGarden}</p>
+                  <p className='card-content'>Product : {card.inputProduct}</p>
                 </div>
-            )}
+              ))}
+            </div>
+          </div>
+        )}
 
-            {tabs[activeTab].label === 'Data' && (
-                <div>
-                    <div className='list-container'>
-                        <div className='list'>
-                            <h3>Product List</h3>
-                            {products.map((product, index) => (
-                                <p key={index}>{product}</p>
-                            ))}
-                        </div>
-                        <div className='list'>
-                            <h3>Garden List</h3>
-                            {gardens.map((garden, index) => (
-                                <p key={index}>{garden}</p>
-                        ))}
-                    </div>
-                </div>
-                    <input className='place-holder'
-                        type='text'
-                        placeholder='Add Product'
-                        value={inputProduct}
-                        onChange={handleInputChangeProduct}
-                    />
-                    <button onClick={handleProductSelect} className='card-button'>Add Product</button>
-                    <br />
-                    <input className='place-holder'
-                        type='text'
-                        placeholder='Add Garden'
-                        value={inputGarden}
-                        onChange={handleInputChangeGarden}
-                    />
-                    <button onClick={handleGardenSelect} className='card-button'>Add Garden</button>
-                    </div>
-            )}
-        </div>
+        {tabs[activeTab].label === 'Data' && (
+          <div className='list-container'>
+            <div className='list'>
+              <h3>Product</h3>
+              <select
+                className='drop-down'
+                value={inputProduct}
+                onChange={handleInputChangeProduct}
+              >
+                <option value='' disabled>Select Product</option>
+                {products.map((product, index) => (
+                  <option key={index} value={product}>{product}</option>
+                ))}
+              </select>
+              <h3>Garden</h3>
+              <select
+                className='drop-down'
+                value={inputGarden}
+                onChange={handleInputChangeGarden}
+              >
+                <option value="" disabled>Select Garden</option>
+                {gardens.map((garden, index) => (
+                  <option key={index} value={garden}>{garden}</option>
+                ))}
+              </select>
+              <button onClick={handleAddCard} className='card-button'>
+                Add Card
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
