@@ -118,21 +118,21 @@ const Tabs = () => {
                         ))}
                     </div>
                 </div>
-                    <input
+                    <input className='place-holder'
                         type='text'
                         placeholder='Add Product'
                         value={inputProduct}
                         onChange={handleInputChangeProduct}
                     />
-                    <button onClick={handleProductSelect}>Add Product</button>
+                    <button onClick={handleProductSelect} className='card-button'>Add Product</button>
                     <br />
-                    <input
+                    <input className='place-holder'
                         type='text'
                         placeholder='Add Garden'
                         value={inputGarden}
                         onChange={handleInputChangeGarden}
                     />
-                    <button onClick={handleGardenSelect}>Add Garden</button>
+                    <button onClick={handleGardenSelect} className='card-button'>Add Garden</button>
                     </div>
             )}
         </div>
